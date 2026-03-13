@@ -1,97 +1,145 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Page Monitor
 
-# Getting Started
+A React Native Android app that monitors web pages for changes and notifies you when something changes.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Background
 
-## Step 1: Start Metro
+This is my first mobile app — built entirely through AI-assisted development (vibe coding with Claude Code). My background is in data science and scientific computing (Python, SQL, R, MATLAB, and Fortran), with no prior experience in mobile development. This project served as both an experiment in AI-assisted development and a practical solution to a small problem in my daily life.
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Features
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- **Page Monitoring** — Track any web page for text and link changes
+- **Configurable Intervals** — Background monitoring from every 15 minutes to every 24 hours
+- **Visual Diffs** — See exactly what changed with color-coded comparisons
+- **Push Notifications** — Get notified immediately when a change is detected
+- **Multiple Pages** — Monitor as many pages as you need
+- **Share Changes** — Share detected changes with the page link and diff summary
+- **Bilingual** — English and Traditional Chinese (繁體中文)
 
-```sh
-# Using npm
-npm start
+## Screenshots
 
-# OR using Yarn
-yarn start
+| Home | Page Detail | Add / Edit | Diff View |
+|------|-------------|------------|-----------|
+| ![Home screen showing monitored pages list](assets/screenshots/home.png) | ![Page detail screen showing change history](assets/screenshots/page_detail.png) | ![Add or edit page screen](assets/screenshots/add_edit.png) | ![Diff view showing text changes](assets/screenshots/diff_view.png) |
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) v18 or later
+- [Android Studio](https://developer.android.com/studio) with:
+  - Android SDK (API 34+)
+  - Android SDK Build-Tools
+  - Android SDK Platform-Tools
+- JDK 17 (bundled with Android Studio)
+- Environment variables set:
+  - `ANDROID_HOME` pointing to your Android SDK
+  - `JAVA_HOME` pointing to your JDK installation
+
+## Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/phykawing/PageMonitor.git
+cd PageMonitor
+
+# Install dependencies
+npm install
+
+# Start the Metro bundler
+npx react-native start
+
+# In another terminal, build and run on Android
+npx react-native run-android
 ```
 
-## Step 2: Build and run your app
+## How It Works
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+1. **Add a page** — Enter a URL you want to monitor
+2. **Initial snapshot** — The app fetches the page and saves its content
+3. **Background checks** — At the configured interval, the app re-fetches each page in the background
+4. **Change detection** — New content is compared against the last snapshot using FNV-1a hashing (fast path) and text diffing (detailed comparison)
+5. **Notification** — If changes are found, you get a push notification
+6. **View diffs** — Tap to see what changed: added/removed text and links
 
-### Android
+## Tech Stack
 
-```sh
-# Using npm
-npm run android
+| Library | Purpose |
+|---------|---------|
+| [React Native](https://reactnative.dev/) | Cross-platform mobile framework |
+| [React Navigation v7](https://reactnavigation.org/) | Screen navigation |
+| [WatermelonDB](https://github.com/Nozbe/WatermelonDB) | Local database (SQLite-backed) |
+| [react-native-mmkv](https://github.com/mrousavy/react-native-mmkv) | Fast key-value storage for settings |
+| [react-native-background-fetch](https://github.com/transistorsoft/react-native-background-fetch) | Background task scheduling |
+| [@notifee/react-native](https://notifee.app/) | Local push notifications |
+| [htmlparser2](https://github.com/fb55/htmlparser2) | HTML parsing and text extraction |
+| [diff (jsdiff)](https://github.com/kpdecker/jsdiff) | Text diff computation |
+| [i18next](https://www.i18next.com/) | Internationalization |
+| [zustand](https://github.com/pmndrs/zustand) | State management |
+| [date-fns](https://date-fns.org/) | Date formatting |
+| [@react-native-vector-icons/ionicons](https://github.com/oblador/react-native-vector-icons) | Icons |
 
-# OR using Yarn
-yarn android
+## Project Structure
+
+```
+src/
+├── app/              # Root component and navigation setup
+├── screens/          # App screens (Home, AddEdit, PageDetail, DiffView)
+├── components/       # Reusable UI components
+├── database/         # WatermelonDB schema, models, and init
+├── services/         # Core logic (fetching, parsing, diffing, notifications)
+├── store/            # Zustand and MMKV state management
+├── hooks/            # Custom React hooks
+├── i18n/             # Translations (English, Traditional Chinese)
+├── utils/            # Utility functions
+└── theme/            # Colors, typography, spacing constants
 ```
 
-### iOS
+## Building a Release APK
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+### Generate a signing keystore (one-time)
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+```bash
+keytool -genkeypair -v -storetype PKCS12 -keystore page-monitor.keystore -alias page-monitor -keyalg RSA -keysize 2048 -validity 10000
 ```
 
-Then, and every time you update your native dependencies, run:
+### Configure signing
 
-```sh
-bundle exec pod install
+Add to `android/gradle.properties`:
+```properties
+MYAPP_UPLOAD_STORE_FILE=page-monitor.keystore
+MYAPP_UPLOAD_KEY_ALIAS=page-monitor
+MYAPP_UPLOAD_STORE_PASSWORD=your_password
+MYAPP_UPLOAD_KEY_PASSWORD=your_password
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+### Build the APK
 
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+```bash
+cd android
+./gradlew assembleRelease
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+The APK will be at `android/app/build/outputs/apk/release/app-release.apk`.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## Installing the APK
 
-## Step 3: Modify your app
+1. Transfer the APK to your Android device
+2. On your device, go to **Settings > Security** and enable **Install from unknown sources** (or grant permission when prompted)
+3. Open the APK file to install
 
-Now that you have successfully run the app, let's make changes!
+## Known Limitations
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+- **JavaScript-rendered content**: Pages that load content dynamically via JavaScript (SPAs) may not show their dynamic content, since the app uses a simple HTTP fetch rather than a full browser engine.
+- **Battery optimization**: Some Android manufacturers (Xiaomi, Huawei, Samsung) aggressively restrict background tasks. You may need to disable battery optimization for the app in your device settings.
+- **Check timing**: Android's minimum background fetch interval is 15 minutes, and Doze mode may batch or delay tasks. Checks are approximate and not guaranteed to be exact.
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## Contributing
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/my-feature`)
+3. Commit your changes (`git commit -m 'Add my feature'`)
+4. Push to the branch (`git push origin feature/my-feature`)
+5. Open a Pull Request
 
-## Congratulations! :tada:
+## License
 
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.

@@ -1,0 +1,99 @@
+{
+  "app": {
+    "name": "Page Monitor"
+  },
+  "home": {
+    "title": "Page Monitor",
+    "emptyTitle": "No pages monitored",
+    "emptySubtitle": "Tap + to add a page to monitor",
+    "lastChecked": "Last checked {{time}}",
+    "neverChecked": "Never checked",
+    "pullToRefresh": "Pull to refresh",
+    "interval": "Every {{interval}}",
+    "actions": "Actions",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "addEdit": {
+    "addTitle": "Add Page",
+    "editTitle": "Edit Page",
+    "urlLabel": "URL",
+    "urlPlaceholder": "https://example.com",
+    "urlError": "Please enter a valid URL",
+    "titleLabel": "Name (optional)",
+    "titlePlaceholder": "e.g. My Website",
+    "activeLabel": "Active monitoring",
+    "intervalLabel": "Check interval",
+    "maxChangesLabel": "Max changes to keep",
+    "unlimited": "Unlimited",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete Page",
+    "deleteConfirmTitle": "Delete Page",
+    "deleteConfirmMessage": "Are you sure you want to delete this page? All change history will be removed.",
+    "deleteConfirm": "Delete",
+    "deleteCancel": "Cancel"
+  },
+  "pageDetail": {
+    "title": "Change History",
+    "checkNow": "Check Now",
+    "share": "Share",
+    "manage": "Manage",
+    "done": "Done",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "deleteSelected": "Delete ({{count}})",
+    "deleteConfirmTitle": "Delete Changes",
+    "deleteConfirmMessage": "Delete {{count}} selected change(s)? This cannot be undone.",
+    "deleteConfirm": "Delete",
+    "deleteCancel": "Cancel",
+    "noChanges": "No changes detected yet",
+    "noChangesSubtitle": "Changes will appear here when detected",
+    "checkInterval": "Checks every {{interval}}",
+    "checking": "Checking...",
+    "lastChecked": "Last checked: {{time}}",
+    "checkComplete": "Check Complete",
+    "changesFound": "Changes detected: {{summary}}",
+    "noChangesFound": "Page content has not changed since last check.",
+    "baselineSaved": "Initial snapshot saved. Future checks will compare against this baseline.",
+    "status": {
+      "ok": "No changes",
+      "changed": "Changed",
+      "error": "Error"
+    }
+  },
+  "diffView": {
+    "title": "Changes",
+    "textChanges": "Text",
+    "linkChanges": "Links",
+    "noTextChanges": "No text changes",
+    "noLinkChanges": "No link changes",
+    "addedLinks": "Added links",
+    "removedLinks": "Removed links",
+    "detectedAt": "Detected {{time}}"
+  },
+  "share": {
+    "pageChanged": "Page changed: {{title}}",
+    "via": "Shared via Page Monitor"
+  },
+  "notification": {
+    "changeTitle": "Page Changed: {{title}}",
+    "channelDescription": "Notifications when monitored web pages change"
+  },
+  "status": {
+    "ok": "OK",
+    "changed": "Changed",
+    "error": "Error",
+    "pending": "Pending"
+  },
+  "common": {
+    "error": "Error",
+    "retry": "Retry",
+    "close": "Close",
+    "loading": "Loading...",
+    "networkError": "Network error. Please check your connection.",
+    "unknownError": "An unexpected error occurred.",
+    "openInBrowser": "Open in browser",
+    "ago": "{{time}} ago"
+  }
+}
