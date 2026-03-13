@@ -12,7 +12,7 @@ export function useMonitoredPages() {
     const subscription = db
       .get<MonitoredPage>('monitored_pages')
       .query(Q.sortBy('created_at', Q.desc))
-      .observeWithColumns(['last_status', 'last_checked_at', 'last_error'])
+      .observeWithColumns(['last_status', 'last_checked_at', 'last_error', 'check_interval_ms'])
       .subscribe({
         next: results => {
           setPages(results);
