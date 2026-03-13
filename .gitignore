@@ -72,6 +72,20 @@ android/app/src/main/assets/
 # Claude Code local settings
 .claude/
 
+# Environment variables (secrets)
+.env
+.env.*
+!.env.example
+
+# TypeScript incremental build info
+tsconfig.tsbuildinfo
+
+# Flipper (React Native debugger)
+.flipper/
+
+# Log files
+*.log
+
 # Yarn
 .yarn/*
 !.yarn/patches
