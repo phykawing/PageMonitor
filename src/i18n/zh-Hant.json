@@ -12,7 +12,8 @@
     "interval": "每 {{interval}}",
     "actions": "操作",
     "edit": "編輯",
-    "delete": "刪除"
+    "delete": "刪除",
+    "checkFailed": "檢查失敗"
   },
   "addEdit": {
     "addTitle": "新增頁面",

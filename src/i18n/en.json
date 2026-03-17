@@ -12,7 +12,8 @@
     "interval": "Every {{interval}}",
     "actions": "Actions",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "checkFailed": "Check failed"
   },
   "addEdit": {
     "addTitle": "Add Page",

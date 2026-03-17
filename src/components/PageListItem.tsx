@@ -30,6 +30,10 @@ export function PageListItem({page, onPress, onLongPress, isChecking = false}: P
 
   const displayTitle = page.title || page.url;
   const showUrl = !!page.title;
+  const errorText =
+    page.lastStatus === 'error'
+      ? page.lastError || t('home.checkFailed')
+      : null;
 
   return (
     <TouchableOpacity style={styles.container} onPress={onPress} onLongPress={onLongPress} activeOpacity={0.7}>
@@ -46,6 +50,11 @@ export function PageListItem({page, onPress, onLongPress, isChecking = false}: P
           </Text>
         )}
         <Text style={styles.lastChecked}>{lastCheckedText} · {intervalText}</Text>
+        {errorText && (
+          <Text style={styles.errorText} numberOfLines={2}>
+            {errorText}
+          </Text>
+        )}
       </View>
       <Text style={styles.chevron}>›</Text>
     </TouchableOpacity>
@@ -85,6 +94,11 @@ const styles = StyleSheet.create({
   lastChecked: {
     fontSize: 12,
     color: colors.textSecondary,
+  },
+  errorText: {
+    fontSize: 12,
+    color: colors.error,
+    marginTop: 2,
   },
   chevron: {
     fontSize: 20,
