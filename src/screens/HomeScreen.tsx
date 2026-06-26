@@ -100,7 +100,7 @@ export function HomeScreen({navigation}: Props) {
   // Track page statuses to force FlatList re-render when any status changes
   // (WatermelonDB reuses model references, so FlatList can't detect property changes)
   const pagesFingerprint = pages
-    .map(p => `${p.id}:${p.lastStatus}:${p.lastCheckedAt}`)
+    .map(p => `${p.id}:${p.lastStatus}:${p.lastCheckedAt}:${isChecking(p.id)}`)
     .join('|');
 
   const renderItem = useCallback(
@@ -133,7 +133,7 @@ export function HomeScreen({navigation}: Props) {
       {loading && (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.primary} />
-          <Text style={styles.loadingText}>Loading...</Text>
+          <Text style={styles.loadingText}>{t('common.loading')}</Text>
         </View>
       )}
 

@@ -439,8 +439,12 @@ export async function configureBackgroundFetch(): Promise<void> {
 // --- Foreground interval checking (called while app is open) ---
 let foregroundInterval: ReturnType<typeof setInterval> | null = null;
 let appStateSubscription: NativeEventSubscription | null = null;
+let isForegroundCheckRunning = false;
 
 async function runForegroundCheck(): Promise<void> {
+  // Guard against concurrent invocations from the interval and the AppState listener
+  if (isForegroundCheckRunning) return;
+  isForegroundCheckRunning = true;
   try {
     const db = getDatabase();
     const now = Date.now();
@@ -464,6 +468,8 @@ async function runForegroundCheck(): Promise<void> {
     }
   } catch (err) {
     console.warn('[BackgroundMonitor] Foreground check error:', err);
+  } finally {
+    isForegroundCheckRunning = false;
   }
 }
 

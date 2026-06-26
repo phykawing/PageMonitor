@@ -71,7 +71,8 @@
     "noLinkChanges": "No link changes",
     "addedLinks": "Added links",
     "removedLinks": "Removed links",
-    "detectedAt": "Detected {{time}}"
+    "detectedAt": "Detected {{time}}",
+    "notFound": "Change record not found."
   },
   "share": {
     "pageChanged": "Page changed: {{title}}",

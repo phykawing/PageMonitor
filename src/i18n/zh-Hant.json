@@ -71,7 +71,8 @@
     "noLinkChanges": "無連結變更",
     "addedLinks": "新增的連結",
     "removedLinks": "移除的連結",
-    "detectedAt": "偵測時間 {{time}}"
+    "detectedAt": "偵測時間 {{time}}",
+    "notFound": "找不到變更記錄。"
   },
   "share": {
     "pageChanged": "頁面已變更：{{title}}",

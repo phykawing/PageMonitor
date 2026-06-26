@@ -25,7 +25,7 @@ import {spacing} from '../theme/spacing';
 type Props = NativeStackScreenProps<RootStackParamList, 'DiffView'>;
 type Tab = 'text' | 'links';
 
-export function DiffViewScreen({route, navigation}: Props) {
+export function DiffViewScreen({route}: Props) {
   const {t} = useTranslation();
   const {changeRecordId} = route.params;
   const [activeTab, setActiveTab] = useState<Tab>('text');
@@ -73,13 +73,6 @@ export function DiffViewScreen({route, navigation}: Props) {
       });
   }, [changeRecordId]);
 
-  // Update header title
-  useEffect(() => {
-    if (page) {
-      navigation.setOptions({title: page.title || page.url});
-    }
-  }, [page, navigation]);
-
   const handleShare = async () => {
     if (!record || !page) return;
     await ShareService.shareChange({
@@ -103,7 +96,7 @@ export function DiffViewScreen({route, navigation}: Props) {
   if (!record) {
     return (
       <View style={styles.loadingContainer}>
-        <Text style={styles.errorText}>Change record not found.</Text>
+        <Text style={styles.errorText}>{t('diffView.notFound')}</Text>
       </View>
     );
   }
